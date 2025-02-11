@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: discord-video-bot
+    restart: unless-stopped
+    volumes:
+      - ./output:/usr/src/app/output
+      - ./segments:/usr/src/app/segments
+    env_file:
+      - .env
