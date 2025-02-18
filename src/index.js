@@ -4,6 +4,7 @@ const queueManager = require('./utils/queueManager');
 const browserService = require('./services/browserService');
 const videoService = require('./services/videoService');
 const FileUtils = require('./utils/fileUtils');
+const commandHandler = require('./commands/commandHandler');
 const {
   PAGE_LOAD_TIMEOUT,
   M3U8_DETECTION_TIMEOUT,
@@ -60,7 +61,7 @@ async function processLink(link, retries = 2) {
     });
 
     await page.goto(link, {
-      waitUntil: 'networkidle2',
+      // waitUntil: 'networkidle2',
       timeout: PAGE_LOAD_TIMEOUT,
     });
     await new Promise((resolve) => setTimeout(resolve, DYNAMIC_CONTENT_WAIT));
@@ -185,48 +186,9 @@ client.on('ready', async () => {
 });
 
 client.on('messageCreate', async (message) => {
-  if (message.author.bot) return;
-  if (!message.content.startsWith('!s')) return;
-
-  const args = message.content.split(' ');
-  if (args.length < 2) {
-    const reply = await message.reply(
-      'Please provide a URL. Usage: `!s <url>`'
-    );
-    setTimeout(async () => {
-      try {
-        await message.delete();
-        await reply.delete();
-      } catch (error) {
-        console.error('Error deleting messages:', error);
-      }
-    }, 5000);
-    return;
-  }
-
-  const url = args[1];
-  try {
-    const queuePosition = queueManager.addToQueue(url, message.channel.id);
-    const totalInQueue = queueManager.getCurrentQueueLength();
-    const reply = await message.reply(
-      `Added URL to queue at position ${queuePosition}. Total URLs in queue: ${totalInQueue}`
-    );
-
-    try {
-      await message.delete();
-    } catch (error) {
-      console.error('Error deleting command message:', error);
-    }
-
+  const shouldProcessQueue = await commandHandler.handleMessage(message);
+  if (shouldProcessQueue) {
     processQueueBatch();
-  } catch (error) {
-    console.error('Error adding URL to queue:', error);
-    await message.channel.send(`Error adding URL to queue: ${error.message}`);
-    try {
-      await message.delete();
-    } catch (deleteError) {
-      console.error('Error deleting command message after error:', deleteError);
-    }
   }
 });
 
