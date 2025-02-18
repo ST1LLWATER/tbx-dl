@@ -315,7 +315,7 @@ src/
 
 ### Docker Volumes
 
-- `./output`: Permanent storage for processed videos
+- `./output`: Permanent storage for processed videos (currently cleanup after serving videos for efficient storage management)
 - `./segments`: Temporary storage for video processing
 
 ## 🤝 Contributing
