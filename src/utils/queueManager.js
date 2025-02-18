@@ -86,8 +86,22 @@ class QueueManager {
     this.isProcessing = value;
   }
 
+  getQueueItems() {
+    return [...this.urlQueue];
+  }
+
   hasItems() {
     return this.urlQueue.length > 0;
+  }
+
+  async clearQueue() {
+    try {
+      this.urlQueue = [];
+      await fs.promises.writeFile(this.queueFilePath, '');
+    } catch (error) {
+      console.error('Error clearing queue:', error);
+      throw error;
+    }
   }
 }
 
