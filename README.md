@@ -1,6 +1,6 @@
-# 🤖 Discord Video Downloader Bot
+# 🤖 TBX-DL (TurboBox Downloader)
 
-A powerful Discord bot that efficiently downloads and processes videos from various sources streaming via M3U8, featuring an advanced queue management system and intelligent file handling capabilities.
+A powerful Discord bot that efficiently downloads and processes videos from various sources streaming via M3U8, featuring an advanced queue management system and intelligent file handling capabilities. TBX-DL combines stealth browser automation with robust queue management to provide a reliable video downloading solution.
 
 ## ✨ Key Features
 
@@ -91,6 +91,82 @@ const browser = await puppeteer.launch({
 - 🔄 Multi-threaded video segment processing
 - 🛡️ Built-in rate limiting and error handling
 
+## 🔮 Future Scope & Integrations
+
+### 📱 Platform Extensions
+
+- **WhatsApp Integration**:
+
+  - Direct video downloads through WhatsApp commands
+  - Group chat support for collaborative downloading
+  - Instant video sharing capabilities
+  - Custom format selection via WhatsApp interface
+
+- **Telegram Bot Integration**:
+
+  - Parallel bot service on Telegram
+  - Inline command support for quick downloads
+  - Channel-based queue management
+  - Progress tracking through message updates
+
+- **Slack Workspace Integration**:
+  - Enterprise-focused video downloading
+  - Team-based queue management
+  - Workspace-specific configurations
+  - Integration with Slack workflows
+
+### 🎯 Feature Expansions
+
+- 🔄 **Cross-Platform Sync**:
+
+  - Unified queue across multiple platforms
+  - Synchronized progress tracking
+  - Shared configuration management
+  - Cross-platform file sharing
+
+- 🎨 **Enhanced Processing**:
+
+  - Advanced video format conversion
+  - Custom video trimming and editing
+  - Thumbnail generation
+  - Subtitle extraction and embedding
+
+- 🔐 **Advanced Security**:
+  - Multi-factor authentication
+  - Platform-specific access controls
+  - Rate limiting per user/platform
+  - Enhanced stealth capabilities
+
+### 💡 API Development
+
+- 🔌 **RESTful API Service**:
+
+  - Public API for third-party integrations
+  - Webhook support for status updates
+  - API key management system
+  - Documentation and SDK development
+
+- 🔧 **Developer Tools**:
+  - CLI tool for local usage
+  - SDK for multiple programming languages
+  - Plugin system for custom extensions
+  - Integration templates and examples
+
+### 🚀 Scalability Improvements
+
+- ⚡ **Performance Optimizations**:
+
+  - Distributed queue processing
+  - Cloud-based video processing
+  - Regional content delivery
+  - Load balancing capabilities
+
+- 📊 **Analytics & Monitoring**:
+  - Usage statistics dashboard
+  - Performance metrics tracking
+  - Error rate monitoring
+  - Resource utilization insights
+
 ## 🛠️ Technical Specifications
 
 ### System Requirements
@@ -102,14 +178,53 @@ const browser = await puppeteer.launch({
 
 ### Configurable Options
 
-The bot offers extensive customization through `src/config/constants.js`:
+The bot offers extensive customization through `src/config/constants.js`. Here's a complete list of all available configuration options:
 
-- 📦 `MAX_FILE_SIZE_MB`: Adjust maximum file size (default: 10MB)
-- ⚡ `MAX_CONCURRENT_DOWNLOADS`: Set parallel download limit (default: 2)
-- 🔧 `WORKER_CONCURRENCY`: Configure segment download workers (default: 20)
-- ⏱️ `PAGE_LOAD_TIMEOUT`: Customize page load timeout (default: 60s)
-- 🔄 `M3U8_DETECTION_TIMEOUT`: Set m3u8 detection timeout (default: 30s)
-- And many more customizable options!
+#### 💾 File Management
+
+- 📦 `MAX_FILE_SIZE_MB`: Maximum file size limit (default: 10MB)
+- 📊 `MAX_FILE_SIZE_BYTES`: Automatically calculated from MAX_FILE_SIZE_MB
+- 🔢 `SEGMENTS_PER_MB`: Number of segments per megabyte (default: 3)
+- 📈 `MAX_SEGMENTS`: Maximum segments per file (default: 30 for 10MB)
+- ⚡ `DOWNLOAD_ALL_SEGMENTS`: Force download all segments regardless of size (default: false)
+
+#### ⚙️ Performance Settings
+
+- 🔄 `MAX_CONCURRENT_DOWNLOADS`: Number of parallel downloads (default: 2)
+- 🧵 `WORKER_CONCURRENCY`: Number of worker threads for processing (default: 20)
+- ⏱️ `PAGE_LOAD_TIMEOUT`: Maximum wait time for page load (default: 60000ms)
+- 🔍 `M3U8_DETECTION_TIMEOUT`: Timeout for M3U8 stream detection (default: 30000ms)
+- 🕒 `DYNAMIC_CONTENT_WAIT`: Wait time for dynamic content loading (default: 15000ms)
+
+#### 🤖 Bot Configuration
+
+- ⌨️ `BOT_PREFIX`: Command prefix for the bot (default: "!")
+- 🔧 `COMMANDS`: Command mappings:
+  - `SCRAPE`: Download command (default: "s")
+  - `HELP`: Help command (default: "help")
+  - `QUEUE`: Queue status command (default: "q")
+  - `CLEAR`: Queue clear command (default: "clear")
+- 🧹 `MESSAGE_DELETE_TIMEOUT`: Auto-delete timeout for messages (default: 5000ms)
+
+#### 🌐 Browser Settings
+
+- 🔒 `BROWSER_ARGS`: Chromium launch arguments:
+  ```javascript
+  [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-accelerated-2d-canvas',
+    '--disable-gpu',
+    '--window-size=1920,1080',
+  ];
+  ```
+- 🎭 `USER_AGENT`: Custom user agent string for browser requests
+  ```javascript
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36';
+  ```
+
+All configurations can be modified in `src/config/constants.js` before deployment. For runtime changes, consider implementing a configuration reload mechanism.
 
 ## 🚀 Installation & Setup
 
