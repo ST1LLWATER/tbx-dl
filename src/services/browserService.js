@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const { BROWSER_ARGS, USER_AGENT } = require('../config/constants');
+const { executablePath } = require('puppeteer');
 
 puppeteer.use(StealthPlugin());
 

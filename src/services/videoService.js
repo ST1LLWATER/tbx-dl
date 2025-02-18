@@ -7,7 +7,12 @@ const m3u8Parser = require('m3u8-parser');
 const { Worker } = require('node:worker_threads');
 const { rimraf } = require('rimraf');
 const FileUtils = require('../utils/fileUtils');
-const { WORKER_CONCURRENCY, MAX_FILE_SIZE_MB } = require('../config/constants');
+const {
+  WORKER_CONCURRENCY,
+  MAX_FILE_SIZE_MB,
+  MAX_SEGMENTS,
+  DOWNLOAD_ALL_SEGMENTS,
+} = require('../config/constants');
 
 ffmpeg.setFfmpegPath(ffmpegPath);
 
@@ -19,12 +24,25 @@ class VideoService {
         throw new Error('No segments found in m3u8 file');
       }
 
+      // Limit segments if needed
+      const segmentsToDownload = DOWNLOAD_ALL_SEGMENTS
+        ? segments
+        : segments.slice(0, MAX_SEGMENTS);
+
+      console.log(
+        `Downloading ${segmentsToDownload.length} out of ${
+          segments.length
+        } segments (${
+          DOWNLOAD_ALL_SEGMENTS ? 'no limit' : 'limited by MAX_SEGMENTS'
+        })`
+      );
+
       const segmentsFolder = FileUtils.createDirectory(
         path.join(__dirname, `../../segments${Date.now()}`)
       );
 
       const segmentFiles = await this.downloadSegments(
-        segments,
+        segmentsToDownload,
         segmentsFolder,
         m3u8Url
       );
@@ -57,6 +75,11 @@ class VideoService {
           totalSize += stats.size;
           validSegments.push(file);
         } else {
+          console.log(
+            `Reached size limit at segment ${
+              validSegments.length
+            }. Total size: ${(totalSize / 1024 / 1024).toFixed(2)}MB`
+          );
           break; // Stop adding segments once we hit the limit
         }
       } catch (error) {
