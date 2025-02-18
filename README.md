@@ -1,153 +1,226 @@
-# Discord Video Downloader Bot
+# 🤖 Discord Video Downloader Bot
 
-A Discord bot that downloads and processes videos from various sources, with queue management and file size limits.
+A powerful Discord bot that efficiently downloads and processes videos from various sources streaming via M3U8, featuring an advanced queue management system and intelligent file handling capabilities.
 
-## Features
+## ✨ Key Features
 
-- Downloads and processes videos from URLs
-- Queue management system (processes 2 URLs at a time)
-- File size limit checking
-- Automatic message cleanup
-- Persistent queue across bot restarts
-- Progress tracking and notifications
-- Docker support for easy deployment
+### Core Functionality
 
-## Prerequisites
+- 📥 Downloads videos from multiple platforms and URLs
+- 🎥 Processes videos with automatic format optimization
+- 📊 Smart queue management system (processes 2 URLs concurrently)
+- 💾 File size limit enforcement (configurable, default 10MB)
+- 🧹 Automatic message cleanup for a tidy Discord channel
+
+### 🔄 Queue Service Architecture
+
+The bot implements a robust queue management system to handle video downloads efficiently and prevent system overload:
+
+#### Core Queue Features
+
+- 📊 **Concurrent Processing**: Handles multiple downloads (default: 2) simultaneously while maintaining system stability
+- 💾 **Persistent Storage**: Queue state is preserved in a local file system, ensuring no requests are lost during restarts
+- 🔁 **Batch Processing**: Implements smart batching to process requests in optimal groups
+- 📈 **Position Tracking**: Real-time tracking of queue positions with user feedback
+
+#### Queue Management
+
+- 🎯 **FIFO Implementation**: First-in-first-out queue system ensures fair processing order
+- 🔄 **Auto-Recovery**: Automatically recovers queue state after system restarts
+- ⚡ **Memory Efficient**: Streams data to disk to handle large queues without memory issues
+- 🛑 **Graceful Handling**: Proper error handling and cleanup for failed downloads
+
+#### Queue Commands
+
+- 📥 Check queue status: `!q`
+- 🗑️ Clear entire queue: `!clear`
+- 📊 View position: Automatic position updates with each submission
+
+#### Technical Implementation
+
+```javascript
+// Queue configuration in constants.js
+MAX_CONCURRENT_DOWNLOADS = 2; // Concurrent download limit
+WORKER_CONCURRENCY = 20; // Worker threads for processing
+```
+
+### 🕵️ Browser Automation & Stealth Features
+
+The bot utilizes advanced browser automation with Puppeteer Stealth to bypass anti-bot measures and handle complex video streaming services:
+
+#### 🛡️ Anti-Detection Features
+
+- 🎭 **Chromium Fingerprint Masking**: Prevents detection of automated browser usage
+- 🔍 **WebDriver Detection Bypass**: Eliminates traces of automation frameworks
+- 🌐 **Network Pattern Normalization**: Mimics natural browser network patterns
+- 🖥️ **Hardware Concurrency Spoofing**: Simulates realistic system configurations
+
+#### 🔒 Advanced Protection
+
+- 🕶️ **Stealth Plugin Integration**: Uses `puppeteer-extra-plugin-stealth` for enhanced anonymity
+- 🎯 **User Agent Rotation**: Dynamic user agent management
+- 🛑 **Anti-Bot Bypass**: Successfully handles services with strict anti-bot measures
+- 🔄 **Auto-Recovery**: Intelligent browser session management and recovery
+
+#### 💡 Technical Implementation
+
+```javascript
+// Browser configuration
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+puppeteer.use(StealthPlugin());
+
+// Browser launch configuration
+const browser = await puppeteer.launch({
+  headless: false,
+  args: BROWSER_ARGS, // Customized browser arguments
+});
+```
+
+#### 🎛️ Configurable Browser Options
+
+- 🔧 Custom browser arguments for optimal performance
+- ⚡ Automatic page resource management
+- 🔄 Session persistence and cleanup
+- 🌐 Network interception capabilities
+
+### Advanced Features
+
+- 💪 Persistent queue system that survives bot restarts
+- 📈 Real-time progress tracking and notifications
+- 🐳 Docker support for seamless deployment
+- 🔄 Multi-threaded video segment processing
+- 🛡️ Built-in rate limiting and error handling
+
+## 🛠️ Technical Specifications
+
+### System Requirements
 
 - Node.js >= 16.0.0 (for local deployment)
 - FFmpeg (automatically installed via ffmpeg-static)
-- A Discord Bot Token
-- Docker and Docker Compose (for Docker deployment)
+- Discord Bot Token
+- Docker and Docker Compose (optional, for containerized deployment)
 
-## Installation
+### Configurable Options
 
-### Local Deployment
+The bot offers extensive customization through `src/config/constants.js`:
 
-1. Clone the repository:
+- 📦 `MAX_FILE_SIZE_MB`: Adjust maximum file size (default: 10MB)
+- ⚡ `MAX_CONCURRENT_DOWNLOADS`: Set parallel download limit (default: 2)
+- 🔧 `WORKER_CONCURRENCY`: Configure segment download workers (default: 20)
+- ⏱️ `PAGE_LOAD_TIMEOUT`: Customize page load timeout (default: 60s)
+- 🔄 `M3U8_DETECTION_TIMEOUT`: Set m3u8 detection timeout (default: 30s)
+- And many more customizable options!
 
-```bash
-git clone <repository-url>
-cd discord-video-downloader
-```
+## 🚀 Installation & Setup
 
-2. Install dependencies:
+### 📋 Local Deployment
 
-```bash
-npm install
-```
+1. **Clone the repository:**
 
-3. Create environment file:
+   ```bash
+   git clone <repository-url>
+   cd discord-video-downloader
+   ```
 
-```bash
-cp .env.example .env
-```
+2. **Install dependencies:**
 
-4. Edit `.env` and add your Discord bot token:
+   ```bash
+   npm install
+   ```
 
-```
-DISCORD_TOKEN=your_discord_bot_token_here
-```
+3. **Set up environment:**
 
-### Docker Deployment
+   ```bash
+   cp .env.example .env
+   ```
 
-1. Clone the repository:
+4. **Configure your `.env` file:**
+   ```
+   DISCORD_TOKEN=your_discord_bot_token_here
+   ```
 
-```bash
-git clone <repository-url>
-cd discord-video-downloader
-```
+### 🐳 Docker Deployment
 
-2. Create and configure environment file:
+1. **Clone and prepare:**
 
-```bash
-cp .env.example .env
-# Edit .env with your Discord bot token
-```
+   ```bash
+   git clone <repository-url>
+   cd discord-video-downloader
+   cp .env.example .env
+   ```
 
-3. Build and start the container:
+2. **Build and launch:**
 
-```bash
-docker-compose up -d
-```
+   ```bash
+   docker-compose up -d
+   ```
 
-4. View logs:
+3. **Monitor logs:**
+   ```bash
+   docker-compose logs -f
+   ```
 
-```bash
-docker-compose logs -f
-```
+## 💻 Usage Guide
 
-5. Stop the bot:
-
-```bash
-docker-compose down
-```
-
-## Usage
-
-### Local Development
+### Development Mode
 
 ```bash
 npm run dev
 ```
 
-### Local Production
+### Production Mode
 
 ```bash
+# Local
 npm start
-```
 
-### Docker Production
-
-```bash
-# Start the bot
+# Docker
 docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop the bot
-docker-compose down
 ```
 
-### Bot Commands
+### 🤖 Bot Commands
 
-- `!scrape <url>` - Add a URL to the download queue
+- `!s <url>` - Add a video URL to download queue
+- `!q` - View current queue status
+- `!help` - Display help information
+- `!clear` - Clear the download queue
 
-## Directory Structure
+## 📁 Project Structure
 
 ```
 src/
-├── config/         # Configuration constants
-├── services/       # Core services (browser, video)
-├── utils/          # Utility functions
-├── workers/        # Worker thread scripts
-└── index.js        # Main bot file
+├── config/         # Configuration and constants
+├── services/       # Core service implementations
+├── utils/          # Helper utilities
+├── workers/        # Worker thread processors
+└── index.js        # Main bot entry point
 ```
 
-## Configuration
+## 💾 Data Persistence
 
-You can modify the following constants in `src/config/constants.js`:
+### Docker Volumes
 
-- `MAX_FILE_SIZE_MB`: Maximum file size limit (default: 10MB)
-- `MAX_CONCURRENT_DOWNLOADS`: Number of concurrent downloads (default: 2)
-- `WORKER_CONCURRENCY`: Number of segment download workers (default: 50)
-- Various timeout values and browser configurations
+- `./output`: Permanent storage for processed videos
+- `./segments`: Temporary storage for video processing
 
-## Docker Volume Locations
-
-The Docker setup includes two persistent volumes:
-
-- `./output`: Where processed videos are stored
-- `./segments`: Temporary storage for video segments during processing
-
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## License
+## 📝 License
 
-ISC
+This project is licensed under the ISC License.
+
+## 🌟 Support & Community
+
+- 📫 Report issues via GitHub Issues
+- 💡 Feature requests are welcome
+- 🤝 Pull requests are encouraged
+
+---
+
+Made with ❤️ for the Discord community
