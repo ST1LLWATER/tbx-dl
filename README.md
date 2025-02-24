@@ -91,81 +91,6 @@ const browser = await puppeteer.launch({
 - 🔄 Multi-threaded video segment processing
 - 🛡️ Built-in rate limiting and error handling
 
-## 🔮 Future Scope & Integrations
-
-### 📱 Platform Extensions
-
-- **WhatsApp Integration**:
-
-  - Direct video downloads through WhatsApp commands
-  - Group chat support for collaborative downloading
-  - Instant video sharing capabilities
-  - Custom format selection via WhatsApp interface
-
-- **Telegram Bot Integration**:
-
-  - Parallel bot service on Telegram
-  - Inline command support for quick downloads
-  - Channel-based queue management
-  - Progress tracking through message updates
-
-- **Slack Workspace Integration**:
-  - Enterprise-focused video downloading
-  - Team-based queue management
-  - Workspace-specific configurations
-  - Integration with Slack workflows
-
-### 🎯 Feature Expansions
-
-- 🔄 **Cross-Platform Sync**:
-
-  - Unified queue across multiple platforms
-  - Synchronized progress tracking
-  - Shared configuration management
-  - Cross-platform file sharing
-
-- 🎨 **Enhanced Processing**:
-
-  - Advanced video format conversion
-  - Custom video trimming and editing
-  - Thumbnail generation
-  - Subtitle extraction and embedding
-
-- 🔐 **Advanced Security**:
-  - Multi-factor authentication
-  - Platform-specific access controls
-  - Rate limiting per user/platform
-  - Enhanced stealth capabilities
-
-### 💡 API Development
-
-- 🔌 **RESTful API Service**:
-
-  - Public API for third-party integrations
-  - Webhook support for status updates
-  - API key management system
-  - Documentation and SDK development
-
-- 🔧 **Developer Tools**:
-  - CLI tool for local usage
-  - SDK for multiple programming languages
-  - Plugin system for custom extensions
-  - Integration templates and examples
-
-### 🚀 Scalability Improvements
-
-- ⚡ **Performance Optimizations**:
-
-  - Distributed queue processing
-  - Cloud-based video processing
-  - Regional content delivery
-  - Load balancing capabilities
-
-- 📊 **Analytics & Monitoring**:
-  - Usage statistics dashboard
-  - Performance metrics tracking
-  - Error rate monitoring
-  - Resource utilization insights
 
 ## 🛠️ Technical Specifications
 
@@ -335,6 +260,82 @@ This project is licensed under the ISC License.
 - 📫 Report issues via GitHub Issues
 - 💡 Feature requests are welcome
 - 🤝 Pull requests are encouraged
+
+## 🔮 Future Scope & Integrations
+
+### 📱 Platform Extensions
+
+- **WhatsApp Integration**:
+
+  - Direct video downloads through WhatsApp commands
+  - Group chat support for collaborative downloading
+  - Instant video sharing capabilities
+  - Custom format selection via WhatsApp interface
+
+- **Telegram Bot Integration**:
+
+  - Parallel bot service on Telegram
+  - Inline command support for quick downloads
+  - Channel-based queue management
+  - Progress tracking through message updates
+
+- **Slack Workspace Integration**:
+  - Enterprise-focused video downloading
+  - Team-based queue management
+  - Workspace-specific configurations
+  - Integration with Slack workflows
+
+### 🎯 Feature Expansions
+
+- 🔄 **Cross-Platform Sync**:
+
+  - Unified queue across multiple platforms
+  - Synchronized progress tracking
+  - Shared configuration management
+  - Cross-platform file sharing
+
+- 🎨 **Enhanced Processing**:
+
+  - Advanced video format conversion
+  - Custom video trimming and editing
+  - Thumbnail generation
+  - Subtitle extraction and embedding
+
+- 🔐 **Advanced Security**:
+  - Multi-factor authentication
+  - Platform-specific access controls
+  - Rate limiting per user/platform
+  - Enhanced stealth capabilities
+
+### 💡 API Development
+
+- 🔌 **RESTful API Service**:
+
+  - Public API for third-party integrations
+  - Webhook support for status updates
+  - API key management system
+  - Documentation and SDK development
+
+- 🔧 **Developer Tools**:
+  - CLI tool for local usage
+  - SDK for multiple programming languages
+  - Plugin system for custom extensions
+  - Integration templates and examples
+
+### 🚀 Scalability Improvements
+
+- ⚡ **Performance Optimizations**:
+
+  - Distributed queue processing
+  - Cloud-based video processing
+  - Regional content delivery
+  - Load balancing capabilities
+
+- 📊 **Analytics & Monitoring**:
+  - Usage statistics dashboard
+  - Performance metrics tracking
+  - Error rate monitoring
+  - Resource utilization insights
 
 ---
 
